@@ -4,39 +4,58 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>${pageTitle} - RideOn</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>CovoiturageApp - <c:out value="${pageTitle}"/></title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome pour les icônes (AJOUT) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container">
-            <a class="navbar-brand" href="index.jsp">RideOn</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <c:choose>
-                        <c:when test="${not empty sessionScope.utilisateur}">
-                            <li class="nav-item"><a class="nav-link" href="index.jsp">Rechercher</a></li>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header avec navigation dynamique -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.jsp" class="text-2xl font-bold text-blue-600">CovoiturageApp</a>
+                
+                <c:choose>
+                    <c:when test="${not empty sessionScope.utilisateur}">
+                        <div class="flex items-center space-x-6">
+                            <a href="index.jsp" class="text-gray-600 hover:text-blue-600 font-medium">Trouver un trajet</a>
                             <c:if test="${sessionScope.utilisateur.role == 'Conducteur'}">
-                                <li class="nav-item"><a class="nav-link" href="proposer-trajet.jsp">Proposer un trajet</a></li>
+                                <a href="proposer-trajet.jsp" class="text-gray-600 hover:text-blue-600 font-medium">Proposer un trajet</a>
                             </c:if>
-                            <li class="nav-item"><a class="nav-link" href="mes-trajets">Mes Trajets</a></li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                    <img src="https://i.pravatar.cc/40?u=${sessionScope.utilisateur.email}" class="rounded-circle">
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#">Profil</a></li>
-                                    <li><a class="dropdown-item" href="deconnexion">Déconnexion</a></li>
-                                </ul>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item"><a class="nav-link" href="connexion.jsp">Se connecter</a></li>
-                            <li class="nav-item"><a class="btn btn-primary ms-2" href="inscription.jsp">S'inscrire</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
+                            <a href="mes-trajets" class="text-gray-600 hover:text-blue-600 font-medium">Mes Trajets</a>
+                            <a href="profil.jsp" class="flex items-center space-x-2">
+                               <span class="font-medium text-gray-700">Bonjour, <c:out value="${sessionScope.utilisateur.prenom}"/></span>
+                               <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name=${sessionScope.utilisateur.prenom}+${sessionScope.utilisateur.nom}&background=0D8ABC&color=fff" alt="Avatar">
+                            </a>
+                            <a href="deconnexion" class="text-gray-600 hover:text-blue-600 font-medium">Déconnexion</a>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="flex items-center space-x-4">
+                            <a href="connexion.jsp" class="text-gray-600 hover:text-blue-600 font-medium">Connexion</a>
+                            <a href="inscription.jsp" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-blue-700 transition-colors">Inscription</a>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
-    </nav>
+    </header>

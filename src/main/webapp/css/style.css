@@ -1,11 +1,511 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-body { font-family: 'Poppins', sans-serif; background-color: #f7f8fc; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
-.navbar { background-color: #fff !important; border-bottom: 1px solid #e9ecef; padding: 1rem 0; }
-.navbar-brand { font-weight: 700; color: #0d6efd !important; }
-.main-content { flex-grow: 1; padding-top: 4rem; padding-bottom: 4rem; }
-.form-card { background: #ffffff; padding: 2.5rem; border-radius: 1rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); border: none; }
-.form-card h2 { font-weight: 700; text-align: center; margin-bottom: 2rem; }
-.form-label { font-weight: 500; margin-bottom: 0.5rem; }
-.form-control, .form-select { border-radius: 0.5rem; padding: 0.75rem 1rem; border: 1px solid #ced4da; background-color: #f8f9fa; }
-.form-control:focus { background-color: #fff; border-color: #86b7fe; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); }
-.btn-primary { background-color: #0d6efd; border-color: #0d6efd; font-weight: 600; padding: 0.75rem; border-radius: 0.5rem; }
+
+:root {
+    --primary-blue: #0d6efd;
+    --light-gray-bg: #f7f8fc;
+    --card-border-color: #e9ecef;
+    --input-bg-color: #f8f9fa;
+    --text-color-dark: #212529;
+    --text-color-muted: #6c757d;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-gray-bg);
+    color: var(--text-color-dark);
+}
+
+.navbar {
+    background-color: #fff !important;
+    border-bottom: 1px solid var(--card-border-color);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--primary-blue) !important;
+}
+
+.main-content {
+    padding: 4rem 0;
+}
+
+.form-card {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    border: none;
+}
+
+.form-card h2 {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.form-card .sub-heading {
+    text-align: center;
+    color: var(--text-color-muted);
+    margin-bottom: 2.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-control, .form-select {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--card-border-color);
+    background-color: var(--input-bg-color);
+}
+
+.form-control:focus {
+    background-color: #fff;
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    font-weight: 600;
+    padding: 0.85rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.dashboard-layout {
+    display: flex;
+    background-color: #fff;
+    min-height: calc(100vh - 70px); /* Full height minus navbar */
+}
+
+.dashboard-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background-color: #fff;
+    border-right: 1px solid var(--card-border-color);
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-sidebar .profile-summary {
+    text-align: center;
+    padding: 0 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-sidebar .profile-summary img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 0.75rem;
+}
+
+.dashboard-sidebar .profile-summary h5 {
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+}
+
+.dashboard-sidebar .profile-summary .view-profile {
+    font-size: 0.85rem;
+    color: var(--text-color-muted);
+    text-decoration: none;
+}
+
+.dashboard-sidebar .nav-pills .nav-link {
+    color: var(--text-color-muted);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    margin: 0 1rem 0.25rem 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-sidebar .nav-pills .nav-link .bi {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+}
+
+.dashboard-sidebar .nav-pills .nav-link.active {
+    background-color: #e7f1ff;
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.dashboard-sidebar .offer-ride-btn {
+    margin: auto 1rem 1rem 1rem;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 2.5rem 3rem;
+    background-color: var(--light-gray-bg);
+}
+
+.dashboard-content h2 {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.dashboard-content .page-subtitle {
+    color: var(--text-color-muted);
+    margin-bottom: 2rem;
+}
+
+.dashboard-content .nav-tabs {
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+.dashboard-content .nav-tabs .nav-link {
+    color: var(--text-color-muted);
+    font-weight: 600;
+    border: none;
+    border-bottom: 3px solid transparent;
+}
+
+.dashboard-content .nav-tabs .nav-link.active {
+    color: var(--primary-blue);
+    border-bottom: 3px solid var(--primary-blue);
+}
+
+.history-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--card-border-color);
+}
+
+.history-card-img {
+    width: 150px;
+    height: 100px;
+    border-radius: 0.5rem;
+    background-size: cover;
+    background-position: center;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+}
+
+.history-card-details h5 {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.history-card-details p {
+    color: var(--text-color-muted);
+    margin-bottom: 0.5rem;
+}
+
+.history-card-actions {
+    margin-left: auto;
+}
+
+.history-card-actions .btn-light {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    font-weight: 500;
+}
+
+.dashboard-layout {
+    display: flex;
+    background-color: #fff;
+    min-height: calc(100vh - 70px); /* Full height minus navbar */
+}
+
+.dashboard-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background-color: #fff;
+    border-right: 1px solid var(--card-border-color);
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-sidebar .profile-summary {
+    text-align: center;
+    padding: 0 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-sidebar .profile-summary img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 0.75rem;
+}
+
+.dashboard-sidebar .profile-summary h5 {
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+}
+
+.dashboard-sidebar .profile-summary .view-profile {
+    font-size: 0.85rem;
+    color: var(--text-color-muted);
+    text-decoration: none;
+}
+
+.dashboard-sidebar .nav-pills .nav-link {
+    color: var(--text-color-muted);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    margin: 0 1rem 0.25rem 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-sidebar .nav-pills .nav-link .bi {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+}
+
+.dashboard-sidebar .nav-pills .nav-link.active {
+    background-color: #e7f1ff;
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.dashboard-sidebar .offer-ride-btn {
+    margin: auto 1rem 1rem 1rem;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 2.5rem 3rem;
+    background-color: var(--light-gray-bg);
+}
+
+.dashboard-content h2 {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.dashboard-content .page-subtitle {
+    color: var(--text-color-muted);
+    margin-bottom: 2rem;
+}
+
+.dashboard-content .nav-tabs {
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+.dashboard-content .nav-tabs .nav-link {
+    color: var(--text-color-muted);
+    font-weight: 600;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding-left: 0;
+    padding-right: 1.5rem;
+}
+
+.dashboard-content .nav-tabs .nav-link.active {
+    color: var(--text-color-dark);
+    border-bottom: 3px solid var(--primary-blue);
+}
+
+.history-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--card-border-color);
+}
+
+.history-card-img {
+    width: 150px;
+    height: 100px;
+    border-radius: 0.5rem;
+    background-size: cover;
+    background-position: center;
+    margin-left: 1.5rem;
+    flex-shrink: 0;
+}
+
+.history-card-details h5 {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.history-card-details p {
+    color: var(--text-color-muted);
+    margin-bottom: 0.5rem;
+}
+
+.history-card-actions {
+    margin-top: 0.75rem;
+}
+
+.history-card-actions .btn-light {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    font-weight: 500;
+}
+
+.management-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    border: 1px solid var(--card-border-color);
+    margin-bottom: 1.5rem;
+}
+.management-card .card-header {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+/* Styles for Dashboard Layout */
+.dashboard-layout {
+    display: flex;
+    background-color: #fff;
+    min-height: calc(100vh - 70px); /* Full height minus navbar */
+}
+
+.dashboard-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background-color: #fff;
+    border-right: 1px solid var(--card-border-color);
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-sidebar .profile-summary {
+    text-align: center;
+    padding: 0 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-sidebar .profile-summary img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 0.75rem;
+}
+
+.dashboard-sidebar .profile-summary h5 {
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+    font-size: 1rem;
+}
+
+.dashboard-sidebar .profile-summary .view-profile {
+    font-size: 0.85rem;
+    color: var(--text-color-muted);
+    text-decoration: none;
+}
+
+.dashboard-sidebar .nav-pills .nav-link {
+    color: var(--text-color-muted);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    margin: 0 1rem 0.25rem 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-sidebar .nav-pills .nav-link .bi {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+}
+
+.dashboard-sidebar .nav-pills .nav-link.active {
+    background-color: #e7f1ff;
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.dashboard-sidebar .offer-ride-btn {
+    margin: auto 1rem 1rem 1rem;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 2.5rem 3rem;
+    background-color: var(--light-gray-bg);
+}
+
+.dashboard-content h2 {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+.dashboard-content .page-subtitle {
+    color: var(--text-color-muted);
+    margin-bottom: 2rem;
+}
+
+.dashboard-content .nav-tabs {
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+.dashboard-content .nav-tabs .nav-link {
+    color: var(--text-color-muted);
+    font-weight: 600;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding-left: 0;
+    padding-right: 1.5rem;
+}
+
+.dashboard-content .nav-tabs .nav-link.active {
+    color: var(--text-color-dark);
+    border-bottom: 3px solid var(--primary-blue);
+}
+
+.history-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--card-border-color);
+}
+
+.history-card-img {
+    width: 150px;
+    height: 100px;
+    border-radius: 0.5rem;
+    background-size: cover;
+    background-position: center;
+    margin-left: 1.5rem;
+    flex-shrink: 0;
+}
+
+.history-card-details h5 {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.history-card-details p {
+    color: var(--text-color-muted);
+    margin-bottom: 0.5rem;
+}
+
+.history-card-actions {
+    margin-top: 0.75rem;
+}
+
+.history-card-actions .btn-light {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    font-weight: 500;
+}

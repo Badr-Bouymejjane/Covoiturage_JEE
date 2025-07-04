@@ -1,6 +1,9 @@
-    <footer class="text-center p-4 mt-auto bg-light">
-        <p class="text-muted mb-0">&copy; 2025 RideOn. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-gray-100 mt-auto">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p class="text-sm">&copy; 2025 RideOn. Tous droits réservés.</p>
+        </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

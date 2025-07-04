@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TrajetDAO {
 
-    public void creerTrajet(Trajet trajet) throws SQLException {
+	public void creerTrajet(Trajet trajet) throws SQLException {
         String sql = "INSERT INTO Trajet (VilleDepart, VilleArrivee, DateDepart, HeureDepart, DateArrivee, HeureArrivee, PlacesDisponibles, PrixParPlace, Description, ConducteurId) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
@@ -23,6 +23,7 @@ public class TrajetDAO {
             pstmt.setDate(3, Date.valueOf(trajet.getDateDepart()));
             pstmt.setTime(4, Time.valueOf(trajet.getHeureDepart()));
             
+            // Gère les dates/heures d'arrivée qui peuvent être nulles
             if (trajet.getDateArrivee() != null) {
                 pstmt.setDate(5, Date.valueOf(trajet.getDateArrivee()));
             } else {
@@ -44,11 +45,15 @@ public class TrajetDAO {
         }
     }
 
+    // La méthode pour rechercher les trajets, maintenant triée par date et heure.
     public List<Trajet> rechercherTrajets(String villeDepart, String villeArrivee, LocalDate dateDepart, int places) {
         List<Trajet> trajets = new ArrayList<>();
+        // MISE À JOUR : La recherche se fait à partir de la date fournie (>=)
+        // et les résultats sont triés pour permettre le groupement par date.
         String sql = "SELECT t.*, u.Nom, u.Prenom, u.Email FROM Trajet t " +
-                     "JOIN Utilisateur u ON t.ConducteurId = u.Id " +
-                     "WHERE t.VilleDepart LIKE ? AND t.VilleArrivee LIKE ? AND t.DateDepart = ? AND t.PlacesDisponibles >= ? AND t.StatusTrajet = 'ACTIF'";
+                "JOIN Utilisateur u ON t.ConducteurId = u.Id " +
+                "WHERE t.VilleDepart LIKE ? AND t.VilleArrivee LIKE ? AND t.DateDepart >= ? AND t.PlacesDisponibles >= ? " +
+                "ORDER BY t.DateDepart, t.HeureDepart";
         
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -86,9 +91,9 @@ public class TrajetDAO {
 
     public Trajet findTrajetById(int trajetId) {
         Trajet trajet = null;
-        String sql = "SELECT t.*, u.Nom, u.Prenom, u.Email FROM Trajet t " +
-                     "JOIN Utilisateur u ON t.ConducteurId = u.Id " +
-                     "WHERE t.Id = ?";
+        String sql = "SELECT t.*, u.Nom, u.Prenom, u.Email, u.DateInscription FROM Trajet t " +
+                "JOIN Utilisateur u ON t.ConducteurId = u.Id " +
+                "WHERE t.Id = ?";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -112,6 +117,7 @@ public class TrajetDAO {
                 conducteur.setNom(rs.getString("Nom"));
                 conducteur.setPrenom(rs.getString("Prenom"));
                 conducteur.setEmail(rs.getString("Email"));
+                conducteur.setDateInscription(rs.getTimestamp("DateInscription"));
                 trajet.setConducteur(conducteur);
             }
         } catch (SQLException e) {

@@ -5,10 +5,14 @@ public class Reservation {
     private LocalDateTime dateReservation;
     private int nbrPlaces;
     private StatusReservation statusReservation;
+    
+    // IDs pour la base de données
     private int passagerId;
     private int trajetId;
-    private Utilisateur passager; // Pour afficher les infos du passager au conducteur
-    private Trajet trajet;       // Pour afficher les infos du trajet au passager
+
+    // Objets pour un affichage facile des données
+    private Utilisateur passager; 
+    private Trajet trajet;       
 
     // Getters & Setters
     public int getId() { return id; }

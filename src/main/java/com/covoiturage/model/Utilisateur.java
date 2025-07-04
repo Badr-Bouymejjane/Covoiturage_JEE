@@ -1,12 +1,22 @@
 package com.covoiturage.model;
+
+import java.sql.Timestamp; // Important d'importer Timestamp
+
 public class Utilisateur {
+
     private int id;
     private String nom;
     private String prenom;
     private String email;
     private String motDePasse;
     private Role role;
-    // Getters & Setters
+    private String telephone;
+    
+    // --- AJOUT ---
+    private Timestamp dateInscription;
+
+    // Getters & Setters existants...
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getNom() { return nom; }
@@ -19,4 +29,15 @@ public class Utilisateur {
     public void setMotDePasse(String motDePasse) { this.motDePasse = motDePasse; }
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+    public String getTelephone() { return telephone; }
+    public void setTelephone(String telephone) { this.telephone = telephone; }
+
+    // --- AJOUT : Getters et Setters pour dateInscription ---
+    public Timestamp getDateInscription() {
+        return dateInscription;
+    }
+
+    public void setDateInscription(Timestamp dateInscription) {
+        this.dateInscription = dateInscription;
+    }
 }

@@ -28,9 +28,7 @@ public class TrajetsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action == null) {
-            action = "search"; // Action par défaut si rien n'est spécifié
-        }
+        if (action == null) { action = "search"; }
 
         switch (action) {
             case "search":
@@ -72,11 +70,23 @@ public class TrajetsServlet extends HttpServlet {
             trajet.setPrixParPlace(Float.parseFloat(request.getParameter("prixParPlace")));
             trajet.setDescription(request.getParameter("description"));
             
+            // MISE À JOUR : Gestion des champs optionnels pour l'arrivée
+            String dateArriveeStr = request.getParameter("dateArrivee");
+            if (dateArriveeStr != null && !dateArriveeStr.isEmpty()) {
+                trajet.setDateArrivee(LocalDate.parse(dateArriveeStr));
+            }
+
+            String heureArriveeStr = request.getParameter("heureArrivee");
+            if (heureArriveeStr != null && !heureArriveeStr.isEmpty()) {
+                trajet.setHeureArrivee(LocalTime.parse(heureArriveeStr));
+            }
+
             trajet.setConducteur((Utilisateur) session.getAttribute("utilisateur"));
 
             trajetDAO.creerTrajet(trajet);
             
-            response.sendRedirect("index.jsp?creation=succes");
+            // Redirection vers "Mes Offres" pour voir le trajet créé
+            response.sendRedirect("mes-trajets?creation=succes"); 
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,7 +94,7 @@ public class TrajetsServlet extends HttpServlet {
             request.getRequestDispatcher("proposer-trajet.jsp").forward(request, response);
         } catch (DateTimeParseException | NumberFormatException e) {
             e.printStackTrace();
-            request.setAttribute("erreur", "Format de données invalide.");
+            request.setAttribute("erreur", "Format de données invalide. Veuillez vérifier les dates, heures et nombres.");
             request.getRequestDispatcher("proposer-trajet.jsp").forward(request, response);
         }
     }
